@@ -18,18 +18,18 @@ $typeSource = "FREE";
 $username = "premium1";
 $versiAppPremium = "1.3";
 
-$yourFilePremium = file_get_contents('dataPremiumDebug.json');
+$yourFilePremium = file_get_contents('dataPremium.json');
 $yourDataPremium = json_decode($yourFilePremium);
 
 //For FREE USER
-$versiApp = "1.3";
+$versiApp = "1.4";
 $countToken = 25;
 //Create IP 
 $yourIP = trim(file_get_contents("https://ip.jaranguda.com"));
 //Nama SC 
 $scName = $_SERVER["PHP_SELF"];
 
-$yourFile = file_get_contents('dataDebug.json');
+$yourFile = file_get_contents('data.json');
 $yourData = json_decode($yourFile);
 
 $date = date("D", time());
@@ -147,7 +147,7 @@ class Databases {
        
        
        
-       $yourFile = file_get_contents('dataDebug.json');
+       $yourFile = file_get_contents('data.json');
        $yourData = json_decode($yourFile);
        
        //Create Date
@@ -175,7 +175,7 @@ class Databases {
          echo $redB."[X] Wrong Token, Please Re-run!";
          $deleteUserById = $this->deleteUserById($yourData->id);
          sleep(2);
-         system("rm -f dataDebug.json");
+         system("rm -f data.json");
          
          die();
        }
@@ -209,7 +209,8 @@ class Databases {
     }
     
     //Edit User ExpiredToken By ID 
-    public function editDataUserETById($id){
+    public function editDataUserETById($id)
+    {
       global $yourIP;
       
       $sql1 = mysqli_query($this->koneksi,"SELECT * FROM tableUser WHERE id = '$id'");
@@ -246,6 +247,47 @@ class Databases {
         return $expiredToken;
       }
     }
+    
+    //Edit User Count By Id 
+    public function editDataUserCountById($id)
+    {
+      global $yourIP;
+      
+      $sql1 = mysqli_query($this->koneksi,"SELECT * FROM tableUser WHERE id = '$id'");
+      $data = mysqli_fetch_assoc($sql1);
+      
+      $ip = $yourIP;
+      $userAgent = $data['userAgent'];
+      $id_shortlink = $data['id_shortlink'];
+      $id_versi = $data['id_versi'];
+      $username = $data['username'];
+      $expiredToken = $data['expiredToken'];
+      $count = $data['count'] + 1;
+      $created_at = $data['created_at'];
+      
+      $sql2 = mysqli_query($this->koneksi, "SELECT * FROM tableShortlink WHERE id = '$id_shortlink'");
+      $data2 = mysqli_fetch_assoc($sql2);
+      $token = $data2['token'];
+      
+      saveFileUser($id,$username,$expiredToken);
+      
+      $sql = mysqli_query($this->koneksi,"UPDATE tableUser SET 
+          id_versi = '$id_versi',
+          id_shortlink = '$id_shortlink',
+          username = '$username',
+          ip = '$ip',
+          userAgent = '$userAgent',
+          expiredToken = '$expiredToken',
+          count = '$count',
+          created_at = '$created_at'
+          WHERE id = $id
+            ");
+    
+      if ($sql) {
+        return $count;
+      }
+    }
+    
     
     
     
@@ -343,8 +385,31 @@ class Databases {
       
       return $data;
     }
+    
+    #Table Sourcecode 
+    //Query Data Sourcecode 
+    public function queryDataSourcecode()
+    {
+      $sql = mysqli_query($this->koneksi,"SELECT * FROM tableSourcecode");
+      $data = [];
+      while($dataField = mysqli_fetch_assoc($sql)){
+        $data[] = $dataField;
+        
+      }
+      return $data;
+    }
+    
+    //Query Data Sourcecode By Id 
+    public function queryDataSourcecodeById($id)
+    {
+      $sql = mysqli_query($this->koneksi,"SELECT * FROM tableSourcecode WHERE id = $id");
+      $data = mysqli_fetch_assoc($sql);
+      
+      return $data;
+    }
 }
 $database = new Databases;
+
 
 //Cek Type SourceCode 
 if ($typeSource == "PREMIUM") 
@@ -369,7 +434,7 @@ if ($typeSource == "PREMIUM")
     true;
   }
   //Cek Data json 
-  if (!file_exists('dataPremiumDebug.json')) 
+  if (!file_exists('dataPremium.json')) 
   {
     //Save File Data premium 
     saveFilePremium();
@@ -377,7 +442,7 @@ if ($typeSource == "PREMIUM")
     die();
   }
   
-  if (file_exists('dataPremiumDebug.json')) 
+  if (file_exists('dataPremium.json')) 
   {
     //Cek password on Data
     if ($queryDataUserPremium['pass'] !== "" && $yourDataPremium->password == "") 
@@ -441,7 +506,7 @@ if($typeSource == "FREE")
 {
   
   //Cek USER FREE AKUN
-  if (!file_exists('dataDebug.json')) 
+  if (!file_exists('data.json')) 
   {
     //Create Akun 
     $addNewUser = $database->addNewUser();
@@ -477,9 +542,49 @@ if($typeSource == "FREE")
   
   
   //Cek User Lama
-  if (file_exists('dataDebug.json')) 
+  if (file_exists('data.json')) 
   {
-    
+    //Cek Menu Script 
+    if ($simasterScript == "ON") 
+    {
+      headerMenu();
+      $queryDataSourcecode = $database->queryDataSourcecode();
+      $i = 1;
+      foreach ($queryDataSourcecode as $valueSourcecode)
+      {
+        $valueSourcecode['status']=="UPLOADED" ? $warna = $greenB : $warna = $yellowB;
+        
+        echo $yellowB."[".$i++."]".$yellowB."  [NAMA APK/WEB - YOUTUBE]  : ".$whiteB.$valueSourcecode['namaApkWeb']." - ".$cyanB.$valueSourcecode['linkYt']."  ".$warna.$valueSourcecode['status'];
+        echo "\n";
+      }
+      echo $yellowB."\n[0]  FOR SKIP!";
+      echo "\n\n";
+      echo $cyanB."[>] Input Number For Access : ".$whiteB;
+      $inputNumber = trim(fgets(STDIN));
+      
+      if (!is_numeric($inputNumber) || $inputNumber == "") 
+      {
+        die();
+      }elseif ($inputNumber == 0) {
+        system("clear");
+        true;
+      }elseif (is_numeric($inputNumber)) {
+        $queryDataSourcecodeById = $database->queryDataSourcecodeById($inputNumber);
+        if ($queryDataSourcecodeById) 
+        {
+          system("xdg-open ".$queryDataSourcecodeById['linkYt']);
+          system("clear");
+          true;
+        }
+      }
+    }elseif($simasterScript == "OFF")
+    {
+      true;
+    }else{
+      echo $yellowB.'[!] Open config.php, Fill in Varibel $simasterScript';
+      echo $greenB."\n    ON".$yellowB." for Active Menu\n".$greenB."    OFF".$yellowB." for Non Active Menu\n\n";
+      die();
+    }
     
     //Get ID Versi and shortlink
     $id_versi = $queryDataUserById['id_versi'];
@@ -510,9 +615,13 @@ if($typeSource == "FREE")
           $deleteUserById = $database->deleteUserById($id);
           echo $redB."[X] Token Expired, Please Taking Token Again\n";
           sleep(3);
-          system("rm -f dataDebug.json");
+          system("rm -f data.json");
           die();
         }
+      }elseif ($date == "Sun") {
+        //Edit Count 
+        $editDataUserCountById = $database->editDataUserCountById($yourData->id);
+        
       }
         //Update Data
         $queryDataUserById2 = $database->queryDataUserById($yourData->id);
@@ -529,7 +638,7 @@ if($typeSource == "FREE")
       echo $redB."[X] Please Re-run Again\n\n";
       sleep(2);
    
-      system("rm -f dataDebug.json");
+      system("rm -f data.json");
       die();
       
     }
@@ -561,7 +670,7 @@ ForFreeUser:
 //Function Save File User 
 function saveFileUser($id,$token,$expiredToken)
 {
-  $fileId = fopen("dataDebug.json", "w");
+  $fileId = fopen("data.json", "w");
          fwrite($fileId,'{"id":"'.$id.'","token":"'.$token.'","expiredToken":'.$expiredToken.'}');
 }
 
@@ -570,7 +679,7 @@ ForPremiumUser:
 //Function Save File Premium
 function saveFilePremium($password = "")
 {
-  $fileId = fopen("dataPremiumDebug.json", "w");
+  $fileId = fopen("dataPremium.json", "w");
          fwrite($fileId,'{"password":"'.$password.'"}');
 }
 
@@ -647,6 +756,23 @@ function teksKetik($myString)
   }
 }
 
+//function header Menu 
+function headerMenu()
+{
+  global $yellowB,$greenB,$whiteB,$purpleB,$blueB,$cyanB;
+  global $versiPremium;
+
+  echo $purpleB."
+ _____ _  ___  ___          _            __   _____ 
+/  ___(_) |  \/  |         | |          /  | |  _  | ".$greenB."LIST SCRIPT CHANNEL YT".$purpleB."
+\ `--. _  | .  . | __ _ ___| |_ ___ _ __`| | | |_| | 
+ `--. \ | | |\/| |/ _` / __| __/ _ \ '__|| | \____ | 
+/\__/ / | | |  | | (_| \__ \ ||  __/ |  _| |_.___/ /
+\____/|_| \_|  |_/\__,_|___/\__\___|_|  \___/\____/ 
+";
+  //system("figlet Si Master19");
+  echo $whiteB."=======================================================\n";
+}
 //function Header Premium
 function headerAppPremium()
 {
@@ -677,7 +803,7 @@ function headerApp()
 
   echo $purpleB."
  _____ _  ___  ___          _            __   _____ 
-/  ___(_) |  \/  |         | |          /  | |  _  | ".$greenB."Versi:".$queryById2['versi'].$purpleB."
+/  ___(_) |  \/  |         | |          /  | |  _  | ".$greenB."Versi: by".$versiApp.$purpleB."
 \ `--. _  | .  . | __ _ ___| |_ ___ _ __`| | | |_| | ".$greenB."What's New :".$purpleB."
  `--. \ | | |\/| |/ _` / __| __/ _ \ '__|| | \____ | ".$greenB."1. Optimation Code".$purpleB."
 /\__/ / | | |  | | (_| \__ \ ||  __/ |  _| |_.___/ / ".$greenB."2. Add Features".$purpleB."
