@@ -42,10 +42,10 @@
 //Class Database
 class DatabasesAdmin {
     public $koneksi;
-    private $server = "localhost:3306"; //"z50.h.filess.io:3307";//"sql12.freemysqlhosting.net";
-    private $user = "root"; //"simaster19_bestdateor"; //"sql12579584";
-    private $pass = "root"; //"fd25542f537ba3a16c91d1f75c38fc5444afcea4"; //"tjFFvMVt26";
-    private $dbname = "simaster"; //"simaster19_bestdateor"; //"sql12579584";
+    private $server = "db4free.net:3306"; //"z50.h.filess.io:3307";//"sql12.freemysqlhosting.net";
+    private $user = "simaster"; //"simaster19_bestdateor"; //"sql12579584";
+    private $pass = "12345678"; //"fd25542f537ba3a16c91d1f75c38fc5444afcea4"; //"tjFFvMVt26";
+    private $dbname = "simaster19"; //"simaster19_bestdateor"; //"sql12579584";
     
     //Constructor Function
     function __construct ()
@@ -96,7 +96,7 @@ class DatabasesAdmin {
     //Query Data User 
     public function queryDataUser()
     {
-      $sql = mysqli_query($this->koneksi,"SELECT tableUser.*, tableVersi.versi FROM tableUser INNER JOIN tableVersi ON tableUser.id_versi = tableVersi.id ");
+      $sql = mysqli_query($this->koneksi,"SELECT tableUser.*, tableVersi.versi, tableVersi.namaSc FROM tableUser INNER JOIN tableVersi ON tableUser.id_versi = tableVersi.id ORDER BY id, namaSc ASC");
       $data = [];
       while($dataField = mysqli_fetch_assoc($sql)){
         $data[] = $dataField;
@@ -535,11 +535,11 @@ Awal:
 DATAUSER:
   headerApp();
   $queryDataUser = $database->queryDataUser();
-  print_r($queryDataUser);
+  //print_r($queryDataUser);
   $i = 1;
   foreach ($queryDataUser as $valueUser) 
   {
-    echo $yellowB.$i++." [Id> ".$whiteB.$valueUser['id'].$yellowB." [IP> ".$whiteB.$valueUser['ip'].$yellowB."  [VERSI> ".$whiteB.$valueUser['versi'].$yellowB."  [SISA TOKEN> ".$whiteB.$valueUser['expiredToken'];
+    echo $yellowB.$i++." [Id> ".$whiteB.$valueUser['id'].$yellowB." [IP> ".$whiteB.$valueUser['ip'].$yellowB." [NAMA SC> ".$whiteB.$valueUser['namaSc'].$yellowB."  [VERSI> ".$whiteB.$valueUser['versi'].$yellowB."  [SISA TOKEN> ".$whiteB.$valueUser['expiredToken'];
     echo "\n";
   }
   echo "\n";
@@ -762,13 +762,13 @@ DATAUSERPREMIUM:
     
     $id_versi = $queryDataUserPremiumById['id_versi'];
        
-    echo $yellowB."Ubah Username : ".$whiteB;
+    echo $yellowB."Ubah Username        : ".$whiteB;
     $username = trim(fgets(STDIN));
     
-    echo $yellowB."Ubah Password : ".$whiteB;
+    echo $yellowB."Ubah Password        : ".$whiteB;
     $pass = trim(fgets(STDIN));
     
-    echo $yellowB."Ubah Tanggal Awal : ".$whiteB;
+    echo $yellowB."Ubah Tanggal Awal    : ".$whiteB;
     $created_at = trim(fgets(STDIN));
     
     echo $yellowB."Ubah Tanggal Expired : ".$whiteB;
@@ -927,7 +927,7 @@ DATASHORTLINK:
     echo $yellowB."Ubah Shortlink : ".$whiteB;
     $short = trim(fgets(STDIN));
     
-    echo $yellowB."Ubah Token      : ".$whiteB;
+    echo $yellowB."Ubah Token     : ".$whiteB;
     $token = trim(fgets(STDIN));
     
     if ($short == NULL || $token == NULL) {
@@ -949,7 +949,7 @@ DATASHORTLINK:
     
     echo $greenU."Detail Data $idShortlink \n".$greenT;
     echo $greenT."Shortlink    : ".$queryDataShortlinkById['short']."\n";
-    echo $greenT."Token     : ".$queryDataShortlinkById['token']."\n";
+    echo $greenT."Token        : ".$queryDataShortlinkById['token']."\n";
     echo $greenT."Created At   : ".$queryDataShortlinkById['created_at']."\n";
               
     $input = trim(fgets(STDIN));
@@ -1044,19 +1044,19 @@ DATAVERSI:
   }
 
   AddVersi:
-    echo $yellowB."Input Nama SC : ".$whiteB;
+    echo $yellowB."Input Nama SC  : ".$whiteB;
     $namaSc = trim(fgets(STDIN));
     
     echo $yellowB."Input Versi SC : ".$whiteB;
     $versi = trim(fgets(STDIN));
     
-    echo $yellowB."Input Link SC : ".$whiteB;
+    echo $yellowB."Input Link SC  : ".$whiteB;
     $link = trim(fgets(STDIN));
     
-    echo $yellowB."Input Message : ".$whiteB;
+    echo $yellowB."Input Message  : ".$whiteB;
     $message = trim(fgets(STDIN));
     
-    echo $yellowB."Input Status : ".$whiteB;
+    echo $yellowB."Input Status   : ".$whiteB;
     $status = trim(fgets(STDIN));
     
     if ($namaSc == NULL || $versi == NULL) {
@@ -1221,13 +1221,13 @@ DATASOURCECODE:
   }
 
   AddSourcecode:
-    echo $yellowB."Input Nama Sc : ".$whiteB;
+    echo $yellowB."Input Nama Sc             : ".$whiteB;
     $namaSc = trim(fgets(STDIN));
     
     echo $yellowB."Input Nama Target Apk/Web : ".$whiteB;
     $namaTarget = trim(fgets(STDIN));
     
-    echo $yellowB."Input Link YT : ".$whiteB;
+    echo $yellowB."Input Link YT             : ".$whiteB;
     $linkYt = trim(fgets(STDIN));
     
     if ($namaTarget == NULL || $linkYt == NULL) 
@@ -1342,7 +1342,7 @@ DATAUSERAGENT:
   $queryDataUa= $database->queryDataUa();
   $i = 1;
   foreach ($queryDataUa as $valueUa) {
-    echo $yellowB.$i++." [Id> ".$whiteB.$valueUa['id'].$yellowB." [User Agent> ".$whiteB.$valueUa['ua'].$yellowB."  [Date> ".$whiteB.$valueUa['tanggal'];
+    echo $yellowB.$i++." [Id> ".$whiteB.$valueUa['id'].$yellowB." [User Agent> ".$whiteB.substr($valueUa['ua'],0,30).$yellowB."  [Date> ".$whiteB.$valueUa['tanggal'];
     echo "\n";
   }
   echo "\n";
