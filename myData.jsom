@@ -1,0 +1,106 @@
+{
+  "status":"success",
+  "message":"Successfully Query Data",
+  "info": "Jssjjdj",
+  "data":{
+    "dataShortlink":{
+      "short": [
+        "https:\/\/cararegistrasi.com\/UnYg",
+        "https:\/\/cararegistrasi.com\/1QLPEAqJqxS",
+        "https:\/\/cararegistrasi.com\/zK0oSmnHa",
+        "https:\/\/cararegistrasi.com\/3ow0inHd",
+        "https:\/\/cararegistrasi.com\/9Z6lBq5bxPnW",
+        "https:\/\/cararegistrasi.com\/Kiba",
+        "https:\/\/cararegistrasi.com\/dHzO3Nhb",
+        "https:\/\/cararegistrasi.com\/B1dXNXPRe",
+        "https:\/\/cararegistrasi.com\/XaqCJe",
+        "https:\/\/cararegistrasi.com\/RNwbQvdsTksc",
+        "https:\/\/cararegistrasi.com\/Zk5l", 
+        "https:\/\/cararegistrasi.com\/HH6gRdHKL3D",
+        "https:\/\/cararegistrasi.com\/kcfQXmcOQw",
+        "https:\/\/cararegistrasi.com\/eO5lx1KX8",
+        "https:\/\/cararegistrasi.com\/RLxAC8",  
+        "https:\/\/cararegistrasi.com\/gD3bNrL",
+        "https:\/\/cararegistrasi.com\/6OaI",
+        "https:\/\/cararegistrasi.com\/NtXJ",
+        "https:\/\/cararegistrasi.com\/lpZ5fgAj3",
+        "https:\/\/cararegistrasi.com\/UGLy4xe1",
+        "https:\/\/cararegistrasi.com\/T41OnJFF",
+        "https:\/\/cararegistrasi.com\/aDykYvlXts",
+        "https:\/\/cararegistrasi.com\/nPbfAisY8"
+        ],
+      "token":[
+        "bxegc8rhw1kgnzsaet",
+        "o5t7E3CklanasaQLjR",
+        "7kxxqdZlAbjC0fr3D6",
+        "1tZ2t24sTovvDR2roY",
+        "4Y0bxKqLfdRrN4ZWOf",
+        "MXJOLvNp2bwReaSgfu",
+        "1npLfPYWd4B31u6poA",
+        "kowvEGELf2gaWnhXPf", 
+        "3m03NfR8vzsb6ROqG2",
+        "6zREHpWzbbyFqURR0y",
+        "sUibpUNF1CtWOCdFXS",
+        "HyZcQ0frwQgUsY5bIZ",
+        "uGKNq4gQCJIdLlGFGO",
+        "Zq61Gj3GtFUpbjKgn8",
+        "3lX4sKqTBug9GTGWXU",
+        "KPGPUhC9ufF8HSUGPY",
+        "p5AxBVmQ2NZ0MLbrVr",
+        "IS7PwM53tV6usiaqYP",
+        "giE3VAKifYkdkDWkaJ",
+        "ND952lqfHxmbyhygCi",
+        "WPY4qYP7nIkRhE80im",
+        "mBBzL9Bzj2FCqMtcGn",
+        "j546FeRPunCZ8yXCHw"
+        ]
+    },
+    "dataSourcecode":{
+      "sourcecode":[
+        {
+          "namaSc":"value",
+          "namaApkWeb":"value",
+          "linkYt":"https://youtube.com",
+          "status":"UPLOADED"
+         },
+         {
+          "namaSc":"value2",
+          "namaApkWeb":"value",
+          "linkYt":"https://facebook.com",
+          "status":"NOT YET UPLOADED"
+         }
+        ]
+    },
+    "dataUserPremium":{
+      "userPremium":[
+         {
+          "versiApp":"1.1",
+          "namaSc":"templatenodb.php",
+          "username":"premium1",
+          "password":"U75H1PjfkxtxW2lGsKkZhvdLLbeqXFFO3uGmECOf1ng2PpLthW",
+          "link" : "value",
+          "status":"value"
+         }
+        ]
+    },
+    "dataUser":{
+      "aplikasi":[
+        { 
+        "versiApp":"2.1",
+        "namaSc":"giffy.php",
+        "status":"Active",
+        "link":" ",
+        "message":" "
+        },
+        { 
+        "versiApp":"2.1",
+        "namaSc":"templatenodb.php",
+        "status":"Active",
+        "link":"hhhhhh.com",
+        "message":"1.ngjgjcjcjv\n2.jdjdjdjddj\n3.jfjdjdj"
+        }
+       ]
+    }
+  }
+  
+}
